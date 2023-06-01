@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         text: 'var(--font-josefin)',
-        title: 'var(--font-mont)',
+        title: 'var(--font-montserrat)',
         alt: 'var(--font-monoton)',
       },
       colors: {

@@ -1,9 +1,9 @@
-import './globals.css'
 import React from 'react'
+import './globals.css'
 import {
   Monoton,
   Josefin_Sans as Josefin,
-  Montserrat_Alternates as MontserratAlter,
+  Montserrat_Alternates as MontserratAlternates,
 } from 'next/font/google'
 
 const monoton = Monoton({
@@ -14,14 +14,14 @@ const monoton = Monoton({
 
 const josefin = Josefin({
   subsets: ['latin'],
-  weight: '200',
+  weight: '500',
   variable: '--font-josefin',
 })
 
-const montserratAlter = MontserratAlter({
+const montserratAlter = MontserratAlternates({
   subsets: ['latin'],
-  weight: '400',
-  variable: '--font-mont',
+  weight: '500',
+  variable: '--font-montserrat',
 })
 
 export const metadata = {
@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${monoton.variable} ${josefin.variable} ${montserratAlter.variable} bg-gray-900 font-sans text-gray-100`}
+        className={`${monoton.variable} ${montserratAlter.variable} ${josefin.variable} bg-gray-900 font-sans text-gray-100`}
       >
         {children}
       </body>
