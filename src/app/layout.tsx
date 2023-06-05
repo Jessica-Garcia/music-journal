@@ -5,6 +5,7 @@ import {
   Josefin_Sans as Josefin,
   Montserrat_Alternates as MontserratAlternates,
 } from 'next/font/google'
+import { Provider } from './components/Provider'
 
 const monoton = Monoton({
   subsets: ['latin'],
@@ -40,7 +41,7 @@ export default function RootLayout({
       <body
         className={`${monoton.variable} ${montserratAlter.variable} ${josefin.variable} bg-gray-800 font-sans text-gray-100`}
       >
-        {children}
+        <Provider>{children}</Provider>
       </body>
     </html>
   )

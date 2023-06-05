@@ -2,6 +2,7 @@ import NextAuth from 'next-auth'
 import SpotifyProvider from 'next-auth/providers/spotify'
 
 export const authOption = {
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID || '',
@@ -9,7 +10,7 @@ export const authOption = {
     }),
   ],
   pages: {
-    signIn: '/signin',
+    signIn: '/',
   },
 }
 
