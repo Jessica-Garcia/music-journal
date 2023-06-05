@@ -14,13 +14,13 @@ const monoton = Monoton({
 
 const josefin = Josefin({
   subsets: ['latin'],
-  weight: '500',
+  weight: '300',
   variable: '--font-josefin',
 })
 
 const montserratAlter = MontserratAlternates({
   subsets: ['latin'],
-  weight: '500',
+  weight: '600',
   variable: '--font-montserrat',
 })
 
@@ -38,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${monoton.variable} ${montserratAlter.variable} ${josefin.variable} bg-gray-900 font-sans text-gray-100`}
+        className={`${monoton.variable} ${montserratAlter.variable} ${josefin.variable} bg-gray-800 font-sans text-gray-100`}
       >
         {children}
       </body>

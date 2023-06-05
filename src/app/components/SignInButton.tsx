@@ -14,16 +14,11 @@ export const SignInButton = () => {
     await signOut()
   }
 
-  console.log(session.data)
-
   return (
-    <div className="flex w-1/3 gap-4">
+    <div className="flex gap-4">
       {isSignedIn ? (
         <>
-          <button
-            className="w-1/2 bg-purple-500"
-            onClick={handleSignOutSpotify}
-          >
+          <button className="font-title" onClick={handleSignOutSpotify}>
             Sair
           </button>
           <Image
@@ -36,8 +31,11 @@ export const SignInButton = () => {
           />
         </>
       ) : (
-        <button className="w-1/2 bg-purple-500" onClick={handleConnectSpotify}>
-          Login
+        <button
+          className="h-12 w-44 rounded-3xl bg-yellow-400 p-2 font-title text-lg font-extrabold text-gray-700"
+          onClick={handleConnectSpotify}
+        >
+          Fazer Login
         </button>
       )}
     </div>
