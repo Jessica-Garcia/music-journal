@@ -1,9 +1,10 @@
+'use client'
 import { Music } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 
-export default function LoginPage() {
+export default function SignInPage() {
   async function handleConnectSpotify() {
-    await signIn('spotify')
+    await signIn('spotify', { callbackUrl: '/' })
   }
 
   return (
