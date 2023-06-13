@@ -1,16 +1,21 @@
-import { Account, Session } from 'next-auth'
+import { Session, User } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 
 export declare module 'next-auth' {
   export interface Session {
-    accessToken?: Account.accessToken
+    accessToken?: string
+    user?: User
+    error?: 'RefreshAccessTokenError'
   }
 }
 
 export declare module 'next-auth/jwt' {
   export interface JWT {
-    accessToken?: Account.accessToken
-    accessTokenExpires?: Account.expires_at
+    accessToken?: string
+    expiresAt?: number
+    refreshToken?: string
+    user?: User
+    error?: 'RefreshAccessTokenError'
   }
 }
 

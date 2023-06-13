@@ -1,8 +1,9 @@
 'use client'
-import { signOut, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import Header from './components/Header'
 
 interface Images {
   url: string
@@ -28,10 +29,6 @@ export default function Home() {
     },
   })
 
-  async function handleSignOutSpotify() {
-    await signOut({ callbackUrl: '/signin' })
-  }
-
   console.log(session)
   useEffect(() => {
     async function f() {
@@ -51,37 +48,34 @@ export default function Home() {
     f()
   }, [session])
   return (
-    <div className=" mx-auto my-0 flex max-w-6xl flex-col gap-7 bg-gray-900">
-      <h1 className="bg-white">Logged In</h1>
-      <button className="font-title" onClick={handleSignOutSpotify}>
-        Sair
-      </button>
-
-      <Image
-        src={session.data?.user?.image || ''}
-        width={100}
-        height={100}
-        alt="Picture of the user"
-        className="h-12 w-12 rounded-full"
-        priority
-      />
-
-      <div>
-        {playlists &&
-          playlists.map((playlist) => {
-            return (
-              <div key={playlist.id}>
-                <div>{playlist.name}</div>
-                <Image
-                  src={playlist?.images[0]?.url}
-                  width={200}
-                  height={200}
-                  alt=""
-                />
-              </div>
-            )
-          })}
-      </div>
-    </div>
+    <>
+      {session.status === 'loading' ? (
+        <div className=" mx-auto my-0 flex w-11/12 flex-col gap-7 bg-gray-900">
+          <h1>Carregando...</h1>
+        </div>
+      ) : (
+        <>
+          <Header session={session.data} />
+          <main className=" mx-auto my-0 flex w-11/12 flex-col gap-7 bg-gray-900">
+            <div>
+              {playlists &&
+                playlists.map((playlist) => {
+                  return (
+                    <div key={playlist.id}>
+                      <div>{playlist.name}</div>
+                      <Image
+                        src={playlist?.images[0]?.url}
+                        width={200}
+                        height={200}
+                        alt=""
+                      />
+                    </div>
+                  )
+                })}
+            </div>
+          </main>
+        </>
+      )}
+    </>
   )
 }

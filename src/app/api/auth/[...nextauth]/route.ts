@@ -1,6 +1,6 @@
-import NextAuth, { Account, User } from 'next-auth'
+import NextAuth, { Account, Session, TokenSet, User } from 'next-auth'
+import { JWT } from 'next-auth/jwt'
 import SpotifyProvider from 'next-auth/providers/spotify'
-import { JWT, Session } from '../../../@types/next-auth'
 
 const scopes = [
   'user-read-email',
@@ -13,33 +13,40 @@ const scopes = [
 const params = {
   scope: scopes,
 }
+const queryParamString = new URLSearchParams(params).toString()
 
-const LOGIN_URL =
-  'https://accounts.spotify.com/authorize?' +
-  new URLSearchParams(params).toString()
+const LOGIN_URL = `https://accounts.spotify.com/authorize?${queryParamString}`
 
-const refreshAccessToken = async (token: any) => {
-  const params = new URLSearchParams()
-  params.append('grant_type', 'refresh_token')
-  params.append('refresh_token', token.refreshToken)
-  const response = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      Authorization:
-        'Basic ' +
-        Buffer.from(
-          process.env.SPOTIFY_CLIENT_ID +
-            ':' +
-            process.env.SPOTIFY_CLIENT_SECRET,
-        ).toString('base64'),
-    },
-    body: params,
-  })
-  const data = await response.json()
-  return {
-    accessToken: data.access_token,
-    refreshToken: data.refresh_token ?? token.refreshToken,
-    accessTokenExpires: Date.now() + data.expires_in * 1000,
+const refreshAccessToken = async (token: JWT) => {
+  try {
+    const params = new URLSearchParams()
+    params.append('grant_type', 'refresh_token')
+    params.append('refresh_token', token.refreshToken!)
+    const response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        Authorization:
+          'Basic ' +
+          Buffer.from(
+            process.env.SPOTIFY_CLIENT_ID +
+              ':' +
+              process.env.SPOTIFY_CLIENT_SECRET,
+          ).toString('base64'),
+      },
+      body: params,
+    })
+    const tokens: TokenSet = await response.json()
+
+    if (!response.ok) throw tokens
+    return {
+      ...token,
+      accessToken: tokens.access_token,
+      expiresAt: Math.floor(Date.now() / 1000 + tokens.expires_at!),
+      refreshToken: tokens.refresh_token ?? token.refreshToken,
+    }
+  } catch (error) {
+    console.error('Error refreshing access token', error)
+    return { ...token, error: 'RefreshAccessTokenError' as const }
   }
 }
 
@@ -59,34 +66,40 @@ export const authOption = {
     async jwt({
       token,
       account,
+      user,
     }: {
       token: JWT
       account: Account | null
+      user: User
     }): Promise<JWT> {
-      if (account) {
-        token.accessToken = account.access_token
-        token.refreshToken = account.refresh_token
-        token.accessTokenExpires = account.expires_at
+      if (account && user) {
+        return {
+          accessToken: account.access_token!,
+          expiresAt: Math.floor(Date.now() / 1000 + account.expires_at!),
+          refreshToken: account.refresh_token!,
+          user,
+        }
+      }
+
+      if (Date.now() < 1000 * token.expiresAt!) {
         return token
       }
 
-      if (Date.now() < token.accessTokenExpires * 1000) {
-        return token
-      }
-
-      return refreshAccessToken(token)
+      return await refreshAccessToken(token)
     },
 
     async session({
       session,
       token,
+      user,
     }: {
       session: Session
       token: JWT
       user: User
     }): Promise<Session> {
-      // Send properties to the client, like an access_token from a provider.
+      session.user = token.user
       session.accessToken = token.accessToken
+      session.error = token.error
       return session
     },
   },
