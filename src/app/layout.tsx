@@ -15,7 +15,7 @@ const monoton = Monoton({
 
 const josefin = Josefin({
   subsets: ['latin'],
-  weight: '300',
+  weight: '400',
   variable: '--font-josefin',
 })
 

@@ -41,7 +41,7 @@ const refreshAccessToken = async (token: JWT) => {
     return {
       ...token,
       accessToken: tokens.access_token,
-      expiresAt: Math.floor(Date.now() / 1000 + tokens.expires_at!),
+      expiresAt: Math.floor(Date.now() / 1000 + 60),
       refreshToken: tokens.refresh_token ?? token.refreshToken,
     }
   } catch (error) {
@@ -75,7 +75,7 @@ export const authOption = {
       if (account && user) {
         return {
           accessToken: account.access_token!,
-          expiresAt: Math.floor(Date.now() / 1000 + account.expires_at!),
+          expiresAt: Math.floor(Date.now() / 1000 + 60), //
           refreshToken: account.refresh_token!,
           user,
         }
@@ -91,11 +91,9 @@ export const authOption = {
     async session({
       session,
       token,
-      user,
     }: {
       session: Session
       token: JWT
-      user: User
     }): Promise<Session> {
       session.user = token.user
       session.accessToken = token.accessToken
