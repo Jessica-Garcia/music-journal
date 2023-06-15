@@ -1,5 +1,35 @@
 'use client'
 import { useSession } from 'next-auth/react'
+import { redirect } from 'next/navigation'
+import Header from './components/Header'
+import Dashboard from './components/Dashboard'
+
+export default function Home() {
+  const session = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/signin')
+    },
+  })
+
+  return (
+    <>
+      {session.status === 'loading' ? (
+        <div className=" mx-auto my-0 flex w-11/12 flex-col gap-7 bg-gray-900">
+          <h1>Carregando...</h1>
+        </div>
+      ) : (
+        <>
+          <Header session={session.data} />
+          <Dashboard />
+        </>
+      )}
+    </>
+  )
+}
+
+/* 'use client'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -91,3 +121,4 @@ export default function Home() {
     </>
   )
 }
+ */

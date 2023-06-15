@@ -14,7 +14,7 @@ export default function Header({ session }: headerProps) {
     await signOut({ callbackUrl: '/signin' })
   }
   return (
-    <header className="fixed left-1/2 top-0 flex h-[15vh] w-11/12 -translate-x-1/2 items-center justify-between gap-7 bg-gray-900 p-8">
+    <header className="fixed left-1/2 top-0 z-50 flex h-[15vh] w-11/12 -translate-x-1/2 items-center justify-between gap-7 bg-gray-900 p-8">
       <Link
         href="/"
         className="max-w-[200px] p-4 font-alt text-xl uppercase tracking-[0.15em] text-green-400"
@@ -51,14 +51,16 @@ export default function Header({ session }: headerProps) {
           <LogOut size={17} />
           Sair
         </button>
-        <Image
-          src={session.user?.image || ''}
-          priority
-          width={35}
-          height={25}
-          alt="Picture of the user"
-          className="h-10 w-10 rounded-full border-[1px] border-solid border-green-500"
-        />
+        <div className="grid h-[45px] w-[45px] place-items-center overflow-hidden rounded-full border-[1px] border-solid border-green-500">
+          <Image
+            src={session.user?.image || ''}
+            priority
+            width={43}
+            height={43}
+            alt="Picture of the user"
+            className="object-cover"
+          />
+        </div>
       </div>
     </header>
   )
