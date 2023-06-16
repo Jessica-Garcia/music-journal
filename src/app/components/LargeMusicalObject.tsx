@@ -3,7 +3,7 @@ import React from 'react'
 export default function LargeMusicalObject() {
   return (
     <div className="flex w-full max-w-[19rem] flex-col border-4 border-solid border-green-500">
-      <div className="h-[200px] w-[100%] border-2 border-solid border-green-50 object-cover">
+      <div className="h-[200px] w-[100%] rounded-md border-2 border-solid border-green-50 object-cover">
         Imagem
       </div>
       <div className="flex flex-col border-2 border-solid border-green-500">

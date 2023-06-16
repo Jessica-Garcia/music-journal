@@ -1,13 +1,13 @@
 import React from 'react'
-import SmallMusicalObject from './SmallMusicalObject'
 
-export default function CardColumn() {
+interface CardColumnProps {
+  children: React.ReactNode
+}
+
+export default function CardColumn({ children }: CardColumnProps) {
   return (
-    <div className="flex flex-col border-2 border-solid border-red-400">
-      <SmallMusicalObject />
-      <SmallMusicalObject />
-      <SmallMusicalObject />
-      <SmallMusicalObject />
+    <div className="flex w-full max-w-[19rem] flex-col border-2 border-solid border-red-400">
+      {children}
     </div>
   )
 }

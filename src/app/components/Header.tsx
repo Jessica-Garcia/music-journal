@@ -14,7 +14,7 @@ export default function Header({ session }: headerProps) {
     await signOut({ callbackUrl: '/signin' })
   }
   return (
-    <header className="fixed left-1/2 top-0 z-50 flex h-[15vh] w-11/12 -translate-x-1/2 items-center justify-between gap-7 bg-gray-900 p-8">
+    <header className="fixed left-1/2 top-0 z-50 flex h-[15vh] w-11/12 max-w-7xl -translate-x-1/2 items-center justify-between gap-7 bg-gray-900 p-8">
       <Link
         href="/"
         className="max-w-[200px] p-4 font-alt text-xl uppercase tracking-[0.15em] text-green-400"

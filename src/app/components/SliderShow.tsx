@@ -5,6 +5,12 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import NextArrow from './NextArrow'
 import PrevArrow from './PrevArrow'
+import {
+  slidesToShowFull,
+  slidesToShowLG,
+  slidesToShowMD,
+  slidesToShowXL,
+} from '@/utils/constants'
 interface SliderShowProps {
   children: React.ReactNode
 }
@@ -14,7 +20,7 @@ export default function SliderShow({ children }: SliderShowProps) {
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: slidesToShowFull,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -22,19 +28,19 @@ export default function SliderShow({ children }: SliderShowProps) {
       {
         breakpoint: 1280,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: slidesToShowXL,
         },
       },
       {
         breakpoint: 1000,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: slidesToShowLG,
         },
       },
       {
         breakpoint: 650,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: slidesToShowMD,
         },
       },
     ],
