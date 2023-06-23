@@ -15,8 +15,6 @@ interface SectionSmallObjectsProps {
 export default function SectionSmallObjects({
   list,
 }: SectionSmallObjectsProps) {
-  // const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-
   const newArray = (arr: any, len: any) => {
     const arrays = []
     let i = 0
