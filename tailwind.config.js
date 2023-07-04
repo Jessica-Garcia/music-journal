@@ -10,7 +10,7 @@ module.exports = {
       fontFamily: {
         text: 'var(--font-josefin)',
         title: 'var(--font-montserrat)',
-        alt: 'var(--font-monoton)',
+        alt: 'var(--font-alt)',
       },
       colors: {
         gray: {
@@ -40,7 +40,7 @@ module.exports = {
         green: {
           50: '#e6fbef',
           100: '#b1f1ce',
-          200: '#8cebb6',
+          200: '#048404',
           300: '#57e295',
           400: '#36dc81',
           500: '#04d361',
@@ -50,8 +50,8 @@ module.exports = {
           900: '#025929',
         },
       },
-      blur: {
-        full: '194px',
+      screens: {
+        sm: '500px',
       },
     },
   },

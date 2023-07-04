@@ -1,16 +1,16 @@
 import React from 'react'
 import './globals.css'
 import {
-  Monoton,
+  Carter_One as CarterOne,
   Josefin_Sans as Josefin,
   Montserrat_Alternates as MontserratAlternates,
 } from 'next/font/google'
 import { Provider } from './components/Provider'
 
-const monoton = Monoton({
+const alt = CarterOne({
   subsets: ['latin'],
   weight: '400',
-  variable: '--font-monoton',
+  variable: '--font-alt',
 })
 
 const josefin = Josefin({
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${monoton.variable} ${montserratAlter.variable} ${josefin.variable} bg-gray-800 font-sans text-gray-100`}
+        className={`${alt.variable} ${montserratAlter.variable} ${josefin.variable} bg-gray-800 font-sans text-gray-100`}
       >
         <Provider>{children}</Provider>
       </body>
