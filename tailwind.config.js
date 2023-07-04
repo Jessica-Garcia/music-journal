@@ -52,6 +52,10 @@ module.exports = {
       },
       screens: {
         sm: '500px',
+        '2xl': '1900px',
+        tall: {
+          raw: '(max-height: 620px)',
+        },
       },
     },
   },
