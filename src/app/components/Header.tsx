@@ -4,7 +4,7 @@ import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-
+import headset from '../../../public/fone-verde.png'
 interface headerProps {
   session: Session
 }
@@ -14,23 +14,33 @@ export default function Header({ session }: headerProps) {
     await signOut({ callbackUrl: '/signin' })
   }
   return (
-    <header className="fixed left-1/2 top-0 z-50 flex h-[15vh] w-11/12 max-w-7xl -translate-x-1/2 items-center justify-between gap-7 bg-gray-900 p-8">
-      <Link
-        href="/"
-        className="max-w-[200px] p-4 font-alt text-xl uppercase tracking-[0.15em] text-green-400"
-      >
-        Diário de Músicas
-      </Link>
-      <nav className="flex w-2/3 items-center justify-end gap-8 p-4 tracking-[0.15em]">
+    <header className="fixed left-1/2 top-0 z-50 flex h-[15vh] w-[100%] max-w-7xl -translate-x-1/2 items-center justify-between bg-gray-900 p-4">
+      <div className="flex items-center gap-2">
+        <Image
+          src={headset}
+          width={100}
+          height={100}
+          alt=""
+          className="w-[1.5rem] brightness-200 contrast-125"
+        />
+
         <Link
           href="/"
-          className="font-text text-xl font-bold text-gray-50 transition-all hover:cursor-pointer hover:text-[22px] hover:text-green-600"
+          className=" font-alt text-[0.7rem] uppercase tracking-[0.15em] text-green-200 brightness-200 contrast-125"
+        >
+          Diário de <span className="block">Músicas</span>
+        </Link>
+      </div>
+      <nav className="hidden p-4 tracking-[0.15em] sm:flex sm:items-center sm:justify-end sm:gap-8">
+        <Link
+          href="/"
+          className="font-text font-bold text-gray-50 transition-all hover:cursor-pointer hover:text-[22px] hover:text-green-600"
         >
           Início
         </Link>
         <Link
           href="#"
-          className="font-text text-xl font-bold text-gray-50 transition-all hover:cursor-pointer hover:text-[22px] hover:text-green-600"
+          className="font-text font-bold text-gray-50 transition-all hover:cursor-pointer hover:text-[22px] hover:text-green-600"
         >
           Biblioteca
         </Link>
@@ -39,19 +49,13 @@ export default function Header({ session }: headerProps) {
           <input
             type="text"
             placeholder="Pesquisar"
-            className="h-[38px] w-[200px] bg-transparent placeholder-gray-100 outline-0 placeholder:font-text placeholder:tracking-[0.15em] hover:cursor-default hover:border-gray-50 hover:text-[22px] hover:placeholder:text-green-500 focus:outline-none"
+            className="bg-transparent placeholder-gray-100 outline-0 placeholder:font-text placeholder:tracking-[0.15em] hover:cursor-default hover:border-gray-50 hover:text-[22px] hover:placeholder:text-green-500 focus:outline-none"
           />
         </span>
       </nav>
-      <div className="flex items-center gap-1 p-4">
-        <button
-          className="flex h-[40px] w-[90px] cursor-pointer items-center justify-center gap-1 rounded-3xl border-[1px] border-solid border-transparent bg-transparent p-2 font-text text-base font-bold tracking-[0.15em] text-gray-50 transition hover:border-green-700 hover:bg-green-500 hover:text-[17px] hover:text-white"
-          onClick={handleSignOutSpotify}
-        >
-          <LogOut size={17} />
-          Sair
-        </button>
-        <div className="grid h-[45px] w-[45px] place-items-center overflow-hidden rounded-full border-[1px] border-solid border-green-500">
+      <div className="flex items-center gap-5">
+        <SearchIcon className="w-5" />
+        <div className="h-8 w-8 overflow-hidden rounded-full border-[1px] border-solid border-green-500">
           <Image
             src={session.user?.image || ''}
             priority
@@ -61,6 +65,13 @@ export default function Header({ session }: headerProps) {
             className="object-cover"
           />
         </div>
+        <button
+          className="hidden cursor-pointer items-center justify-center gap-1 font-text text-sm font-bold tracking-[0.15em] text-gray-50 transition hover:border-green-700 hover:bg-green-500 hover:text-[17px] hover:text-white"
+          onClick={handleSignOutSpotify}
+        >
+          <LogOut className="w-4" />
+          <span className="hidden">Sair</span>
+        </button>
       </div>
     </header>
   )
